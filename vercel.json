@@ -17,6 +17,6 @@
     }
   ],
   "buildCommand": "pip install -r requirements.txt",
-  "devCommand": "python app.py",
+  "devCommand": "python app.py"
   
 }
