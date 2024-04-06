@@ -18,5 +18,5 @@
   ],
   "buildCommand": "pip install -r requirements.txt",
   "devCommand": "python app.py",
-  "runtime": "python3.9"
+  
 }
