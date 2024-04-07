@@ -2,10 +2,6 @@
   "version": 2,
   "builds": [
     {
-      "src": "app.py",
-      "use": "@vercel/python"
-    },
-    {
       "src": "templates/*.html",
       "use": "@vercel/static"
     }
@@ -18,5 +14,4 @@
   ],
   "buildCommand": "pip install -r requirements.txt",
   "devCommand": "python app.py"
-  
 }
