@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import os
+
+if not os.path.exists('docs'):
+    os.makedirs('docs')
 import pdfplumber
 import numpy as np
 import torch
@@ -157,16 +160,23 @@ app = Flask(__name__, template_folder='templates')
 def index():
     if request.method == 'POST':
         if request.form.get('btn') == 'index':
+            if 'upload' not in request.files:
+                return "No file selected!"
             upload = request.files['upload']
+            if upload.filename == '':
+                return "No file selected!"
             file_name = secure_filename(upload.filename)
             upload.save(os.path.join("docs", file_name))
-            return redirect(url_for('qa'))
+            return redirect(url_for('qa', file_name=file_name))
         elif request.form.get('btn') == 'qa':
             question = request.form.get('question')
             file_name = request.form.get('file_name')
+            if file_name is None:
+                return "No file selected!"
             answer, s_scores, e_scores, tokens = bert_drive(file_name, question)
             return render_template('qa.html', answer=answer, question=question)
     return render_template('index.html')
+
 
 @app.route('/upload/', methods=['GET', 'POST'])
 def upload():
@@ -178,4 +188,4 @@ def qa():
     return render_template('qa.html', file_names=file_names)
 
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(debug=True)
