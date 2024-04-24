@@ -113,25 +113,25 @@ footer a{
 </style>
 </head>
 <body>
-<div class="topnav">
-  <a class="active" href="#home">I</a>
-  <div class="topnav-right">
-    <a href="#search">Reference Paper</a>
+  <div class="topnav">
+      <a class="active" href="#home">I</a>
+      <div class="topnav-right">
+          <a href="#search">Reference Paper</a>
+      </div>
   </div>
-</div>
-<div class="head">
-    <h1>Document Question Answering System using NLP Techniques</h1>
-</div>
-<div class="container">
-  <form action="/" method="POST">
-    <label for="fname">Question</label>
-    <input type="text" id="fname" name="question" placeholder="Enter Question.." value = "{{question}}">
-    <button type="submit" class="btn-primary" name = 'btn' value = 'qa'>Submit</button>
-  </form>
-  <br>
-    <label for="subject">Answer</label>
-    <textarea readonly id="subject" name="answer" placeholder="Processing..." style="height:200px">{{answer}}</textarea>
-</div>
-
+  <div class="head">
+      <h1>Document Question Answering System using NLP Techniques</h1>
+  </div>
+  <div class="container">
+      <form action="{{ url_for('index') }}" method="POST">
+          <input type="hidden" name="file_name" value="{{ file_name }}">
+          <label for="fname">Question</label>
+          <input type="text" id="fname" name="question" placeholder="Enter Question.." value="{{ question or '' }}">
+          <button type="submit" class="btn-primary" name='btn' value='qa'>Submit</button>
+      </form>
+      <br>
+      <label for="subject">Answer</label>
+      <textarea readonly id="subject" name="answer" placeholder="" style="height:200px">{{ answer or '' }}</textarea>
+  </div>
 </body>
 </html>
