@@ -10,16 +10,6 @@ import torch
 from transformers import BertForQuestionAnswering, BertTokenizer
 from flask import Flask, request, render_template, redirect, url_for
 from werkzeug.utils import secure_filename
-from werkzeug.datastructures import FileStorage
-# import firebase_admin
-# from firebase_admin import credentials
-# from firebase_admin import firestore
-
-# # Initialize Firebase
-# cred = credentials.Certificate('C:/Users/MohdS/OneDrive/Desktop/Major-Project/credentials.json')
-# firebase_admin.initialize_app(cred, {
-#     'projectId': 'testing-58ac9',
-# })
 
 app = Flask(__name__)
 
@@ -30,26 +20,10 @@ def pdf_extract(file_name):
             for pdf_page in pdf.pages:
                 single_page_text = pdf_page.extract_text()
                 pdf_txt += single_page_text
-        store_pdf_text(file_name, pdf_txt)
     except FileNotFoundError:
         # Handle case where the file is not found
         return "File not found: {}".format(file_name)
     return pdf_txt
-
-
-# def store_pdf_text(file_name, pdf_text):
-#     db = firestore.client()
-#     doc_ref = db.collection('pdf_data').document(file_name)
-#     doc_ref.set({'text': pdf_text})
-
-# def get_pdf_text(file_name):
-#     db = firestore.client()
-#     doc_ref = db.collection('pdf_data').document(file_name)
-#     doc = doc_ref.get()
-#     if doc.exists:
-#         return doc.to_dict()['text']
-#     else:
-#         return None
 
 def bert_drive(file_name, question):
     text = pdf_extract(file_name)
@@ -57,24 +31,17 @@ def bert_drive(file_name, question):
         max_score = 0
         final_answer = ""
         new_df = expand_split_sentences(text)
-        tokens = []
-        s_scores = np.array([])
-        e_scores = np.array([])
 
         for new_context in new_df:
-            ans, score, start_score, end_score, token = bert_qa(question, new_context)
+            answer = get_answer(question, new_context)
+            score = answer['score']
             if score > max_score:
                 max_score = score
-                start_score_tensor = torch.tensor(start_score)
-                end_score_tensor = torch.tensor(end_score)
-                s_scores = start_score_tensor.detach().numpy()
-                e_scores = end_score_tensor.detach().numpy()
-                tokens = token
-                final_answer = ans
+                final_answer = answer['answer']
 
-        return final_answer, s_scores, e_scores, tokens
+        return final_answer
     else:
-        return "Sorry, couldn't retrieve the PDF text from Firebase.", [], [], []
+        return "Sorry, couldn't retrieve the PDF text."
 
 def expand_split_sentences(pdf_txt):
     import nltk
@@ -96,7 +63,9 @@ def expand_split_sentences(pdf_txt):
 model = BertForQuestionAnswering.from_pretrained('bert-large-uncased-whole-word-masking-finetuned-squad')
 tokenizer = BertTokenizer.from_pretrained('bert-large-uncased-whole-word-masking-finetuned-squad')
 
-def bert_qa(question, context, max_len=500):
+
+def get_answer(question, context):
+    return qa_model(question=question, context=context)
 
     #Tokenize input question and passage 
     #Add special tokens - [CLS] and [SEP]
@@ -152,8 +121,6 @@ def bert_qa(question, context, max_len=500):
     
     return (answer_start_index, answer_end_index, start_token_score, end_token_score,  answer)
 
-    pass
-
 app = Flask(__name__, template_folder='templates')
 
 @app.route('/', methods=['GET', 'POST'])
@@ -174,7 +141,7 @@ def index():
             if file_name is None:
                 return "No file selected!"
             answer, s_scores, e_scores, tokens = bert_drive(file_name, question)
-            return render_template('qa.html', answer=answer, question=question)
+            return render_template('qa.html', answer=answer, question=question, file_name=file_name)
     return render_template('index.html')
 
 
@@ -184,8 +151,11 @@ def upload():
 
 @app.route('/qa/', methods=['GET', 'POST'])
 def qa():
+    file_name = request.args.get('file_name')
+    if file_name is None:
+        return "No file selected"
     file_names = [f for f in os.listdir("docs")]
-    return render_template('qa.html', file_names=file_names)
+    return render_template('qa.html', file_names=file_names, file_name=file_name)
 
 if __name__ == '__main__':
     app.run(debug=False)
