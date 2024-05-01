@@ -1,17 +1,17 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "templates/*.html",
-      "use": "@vercel/static"
+    "builds": [
+      {
+        "src": "app.py",
+        "use": "@vercel/python"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "app.py"
+      }
+    ],
+    "env": {
+      "FLASK_ENV": "production"
     }
-  ],
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/app.py"
-    }
-  ],
-  "buildCommand": "pip install -r requirements.txt",
-  "devCommand": "python app.py"
-}
+  }
