@@ -1,2 +1,9 @@
 .vercel
 node_modules
+node_modules/undici/docs/assets
+Pipfile
+package.json
+package-lock.json
+credentials.json
+bert_model.pkl
+bert_tokenizer.pkl
