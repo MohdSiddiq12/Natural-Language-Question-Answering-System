@@ -29,7 +29,7 @@ This client-server system comprises a Flask backend and a web frontend. Key comp
 
 ### BERT Architecture (Optional)
 
-For a deeper understanding of BERT architecture, you can refer to [this explanatory resource](link/to/resource).
+For a deeper understanding of BERT architecture, you can refer to [this explanatory resource](https://en.wikipedia.org/wiki/BERT_(language_model)).
 
 ## System Design
 
@@ -48,7 +48,7 @@ The project adheres to a well-defined system design documented in the Major Proj
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/your-username/document-qa-system.git
+    git clone https://github.com/MohdSiddiq12/Major-Project
     ```
 
     **Note:** Use code with caution.
@@ -79,4 +79,4 @@ Contributions are welcome! If you encounter issues or have suggestions, please o
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the Apache License.
