@@ -57,3 +57,20 @@ The project follows a well-defined system design, as illustrated in the UML diag
 
 ```bash
 git clone https://github.com/your-username/document-qa-system.git
+
+Install the required dependencies:
+
+pip install -r requirements.txt
+
+Download the pre-trained BERT model and tokenizer, and save them as bert_model.pkl and bert_tokenizer.pkl in the project directory.
+
+Run the Flask application:
+
+bashCopy codepython app.py
+
+Access the web interface by opening your browser and navigating to http://localhost:5000.
+
+Contributing
+Contributions to this project are welcome! If you find any issues or have suggestions for improvement, please open an issue or submit a pull request.
+License
+This project is licensed under the MIT License.
