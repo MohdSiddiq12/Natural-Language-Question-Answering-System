@@ -21,11 +21,15 @@ def pdf_extract(file_name):
     file_path = os.path.join("docs", file_name)
     if not os.path.exists(file_path):
         return None
-    with pdfplumber.open(file_path) as pdf:
-        for pdf_page in pdf.pages:
-            single_page_text = pdf_page.extract_text()
-            if single_page_text:
-                pdf_txt += single_page_text
+    try:
+        with pdfplumber.open(file_path) as pdf:
+            for pdf_page in pdf.pages:
+                single_page_text = pdf_page.extract_text()
+                if single_page_text:
+                    pdf_txt += single_page_text
+    except Exception as e:
+        print(f"Error extracting text from PDF: {e}")
+        return None
     return pdf_txt
 
 def expand_split_sentences(pdf_txt):
@@ -48,43 +52,45 @@ def expand_split_sentences(pdf_txt):
     return chunks
 
 def get_answer(question, context):
-    inputs = tokenizer.encode_plus(question, context, return_tensors='pt')
-    input_ids = inputs['input_ids'].tolist()[0]
+    try:
+        inputs = tokenizer.encode_plus(question, context, return_tensors='pt')
+        input_ids = inputs['input_ids'].tolist()[0]
 
-    text_tokens = tokenizer.convert_ids_to_tokens(input_ids)
-    sep_index = input_ids.index(tokenizer.sep_token_id)
-    len_question = sep_index + 1
-    len_context = len(input_ids) - len_question
+        text_tokens = tokenizer.convert_ids_to_tokens(input_ids)
+        sep_index = input_ids.index(tokenizer.sep_token_id)
+        len_question = sep_index + 1
+        len_context = len(input_ids) - len_question
 
-    segment_ids = [0] * len_question + [1] * len_context
+        segment_ids = [0] * len_question + [1] * len_context
 
-    outputs = model(**inputs)
-    start_scores = outputs.start_logits
-    end_scores = outputs.end_logits
+        outputs = model(**inputs)
+        start_scores = outputs.start_logits
+        end_scores = outputs.end_logits
 
-    start_scores = start_scores.detach().numpy().flatten()
-    end_scores = end_scores.detach().numpy().flatten()
+        start_scores = start_scores.detach().numpy().flatten()
+        end_scores = end_scores.detach().numpy().flatten()
 
-    answer_start_index = np.argmax(start_scores)
-    answer_end_index = np.argmax(end_scores)
+        answer_start_index = np.argmax(start_scores)
+        answer_end_index = np.argmax(end_scores)
 
-    start_token_score = np.round(start_scores[answer_start_index], 2)
-    end_token_score = np.round(end_scores[answer_end_index], 2)
+        start_token_score = np.round(start_scores[answer_start_index], 2)
+        end_token_score = np.round(end_scores[answer_end_index], 2)
 
-    answer = text_tokens[answer_start_index]
-    for i in range(answer_start_index + 1, answer_end_index + 1):
-        if text_tokens[i][0:2] == '##':
-            answer += text_tokens[i][2:]
-        else:
-            answer += ' ' + text_tokens[i]
+        answer = text_tokens[answer_start_index]
+        for i in range(answer_start_index + 1, answer_end_index + 1):
+            if text_tokens[i][0:2] == '##':
+                answer += text_tokens[i][2:]
+            else:
+                answer += ' ' + text_tokens[i]
 
-    if (answer_start_index == 0) or (start_token_score < 0) or (answer == '[SEP]') or (answer_end_index < answer_start_index):
-        return (start_token_score, end_token_score, "Sorry, Couldn't find answer in the given PDF. Please try again!", context)
-    
-    # Extract additional context (e.g., surrounding sentences)
-    additional_context = " ".join(text_tokens[max(0, answer_start_index-20):min(len(text_tokens), answer_end_index+20)])
-    
-    return (start_token_score, end_token_score, answer, additional_context)
+        if (answer_start_index == 0) or (start_token_score < 0) or (answer == '[SEP]') or (answer_end_index < answer_start_index):
+            return (start_token_score, end_token_score, "Sorry, Couldn't find answer in the given PDF. Please try again!", context)
+        
+        additional_context = " ".join(text_tokens[max(0, answer_start_index-20):min(len(text_tokens), answer_end_index+20)])
+        return (start_token_score, end_token_score, answer, additional_context)
+    except Exception as e:
+        print(f"Error getting answer: {e}")
+        return (0, 0, "Sorry, Couldn't find answer in the given PDF. Please try again!", context)
 
 def bert_drive(file_name, question):
     text = pdf_extract(file_name)
@@ -92,7 +98,7 @@ def bert_drive(file_name, question):
         return "Sorry, couldn't retrieve the PDF text."
     
     chunks = expand_split_sentences(text)
-    max_workers = min(10, len(chunks))  # Adjust the number of workers based on workload
+    max_workers = min(10, len(chunks))
     results = []
 
     with ThreadPoolExecutor(max_workers=max_workers) as executor:
@@ -107,11 +113,8 @@ def bert_drive(file_name, question):
     if not results:
         return "Sorry, Couldn't find answer in the given PDF. Please try again!"
 
-    # Get the best answer based on the start token score
     best_result = max(results, key=lambda x: x[0] if x else 0)
     best_answer, additional_context = best_result[2], best_result[3]
-    
-    # Combine the best answer with additional context
     full_answer = f"Answer: {best_answer}\n\nAdditional Context: {additional_context}"
     return full_answer
 

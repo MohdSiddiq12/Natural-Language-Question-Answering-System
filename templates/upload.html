@@ -1,171 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>Upload</title>
-</head>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document Upload</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
-body{
-  background: rgba(0,0,0,0.9);
+body {
+  background: linear-gradient(to right, #2f3640, #353b48);
+  color: #dcdde1;
+  font-family: 'Ubuntu', sans-serif;
 }
-form{
+form {
   position: absolute;
-  top: 58%;
+  top: 50%;
   left: 50%;
-  margin-top: -100px;
-  margin-left: -250px;
+  transform: translate(-50%, -50%);
   width: 500px;
-  height: 200px;
-  border: 4px dashed #fff;
-}
-form p{
-  width: 100%;
-  height: 100%;
+  padding: 40px;
+  border: 4px dashed #dcdde1;
+  background: rgba(236, 240, 241, 0.1);
   text-align: center;
-  line-height: 170px;
-  color: #ffffff;
-  font-family: Arial;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
-form input{
+form p {
+  color: #dcdde1;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+form input {
   position: absolute;
-  margin: 0;
-  padding: 0;
   width: 100%;
   height: 100%;
-  outline: none;
   opacity: 0;
+  cursor: pointer;
 }
-form button{
-  margin: 0;
+form button {
+  margin-top: 20px;
   color: #fff;
-  background: #16a085;
+  background: #e84118;
   border: none;
-  width: 508px;
-  height: 35px;
-  margin-top: -20px;
-  margin-left: -4px;
-  border-radius: 4px;
-  border-bottom: 4px solid #117A60;
-  transition: all .2s ease;
-  outline: none;
-}
-form button:hover{
-  background: #149174;
-	color: #0C5645;
-}
-form button:active{
-  border:0;
-}
-
-
-.head{
-	background: #eeeeee;
-	position:relative;
-    text-align:center;
-	padding-top: 50px;
-	padding-bottom: 40px;
-	margin-bottom: 20px;
-}
-.head h1{
-	color: #000000;
-	font-size: 60px;
-	font-family:Bahnschrift SemiBold;
-	margin:auto;
-    vertical-align:middle;
-}
-
-.head p{
-	color: #353535;
-	font-family:Bahnschrift;
-	margin:auto;
-    vertical-align:middle;
-}
-.head a{
-	text-decoration: none;
-	color: #534bae;
-}
-.topnav {
-  overflow: hidden;
-  background-color: #222222;
-}
-
-.topnav a {
-  float: left;
-  color: #cccccc;
-  margin: auto;
+  width: 100%;
   padding: 15px;
-  margin-left: 200px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+form button:hover {
+  background: #c0392b;
+}
+.head {
+  background: #273c75;
+  text-align: center;
+  padding: 50px 0;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+.head h1 {
+  color: #e84118;
+  font-size: 48px;
+  font-family: 'Bahnschrift SemiBold';
+}
+.head p {
+  color: #dcdde1;
+  font-family: 'Bahnschrift';
+  font-size: 20px;
+}
+.head a {
+  color: #3498db;
   text-decoration: none;
 }
-
-.topnav a:hover {
-  color: #ffffff;
-}
-
-.topnav a.active {
-  font-size: 18px;
-  text-align: center;
-  font-family:Bahnschrift;
-}
-
-.topnav a.active:hover {
-  color: #ffffff;
-}
-
-.topnav-right {
-  float: right;
-  font-size: 14px;
-  text-align: center;
-  margin-right: 200px;
-  font-family:Bahnschrift;
-}
 footer {
-   position:absolute;
-   bottom:0;
-   width:99%;
-   height:80px;   /* Height of the footer */
-   align: center;
+  width: 100%;
+  height: 80px;
+  text-align: center;
+  background: #2f3640;
+  position: absolute;
+  bottom: 0;
 }
-footer p{
-	text-align: center;
-	color: #ffffff;
-	font-family:Bahnschrift;
+footer p {
+  color: #dcdde1;
+  font-family: 'Bahnschrift';
+  line-height: 80px;
 }
-footer a{
-	text-decoration: none;
-	color: #534bae;
+footer a {
+  color: #3498db;
+  text-decoration: none;
 }
-
-
-</style>  
-
-<script>
-$(document).ready(function(){
-  $('form input').change(function () {
-    $('form p').text(this.files.length + " file(s) selected");
-  });
-});
-</script>
-
+#file-chosen {
+  margin-top: 20px;
+  color: #27ae60;
+  display: none;
+}
+</style>
+</head>
 <body>
-<div class="topnav">
-  <a class="active" href="#home">??</a>
-  <div class="topnav-right">
-    <a href="#search">Reference Paper</a>
-  </div>
-</div>
 <div class="head">
-    <h1>Document Question Answering System using NLP Techniques</h1>
-   
+  <h1>Document Question Answering System using NLP Techniques</h1>
 </div>
-
 
 <form method="POST" enctype="multipart/form-data" class="form-control" action="/">
-  <input type="file" name="upload" class="random">
+  <input type="file" name="upload" class="random" id="file-input">
   <p>Drag your files here or click in this area.</p>
-  <button class="btn-primary" type="submit" name = 'btn' value = 'index'>Upload</button>
+  <button class="btn-primary" type="submit" name='btn' value='index'>Upload</button>
+  <p id="file-chosen"><i class="fa fa-check-circle"></i> File selected</p>
 </form>
 
+<script>
+document.getElementById('file-input').addEventListener('change', function() {
+  document.getElementById('file-chosen').style.display = 'block';
+});
+</script>
 </body>
-</html> 
+</html>

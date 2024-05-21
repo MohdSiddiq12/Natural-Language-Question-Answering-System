@@ -1,137 +1,101 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QA System</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 <style>
-body {font-family: Helvetica, sans-serif;background: #353535; margin: 0px;}
-* {box-sizing: border-box;}
-
+body {
+  font-family: 'Helvetica', sans-serif;
+  background: linear-gradient(to right, #2f3640, #353b48);
+  color: #dcdde1;
+}
+* {
+  box-sizing: border-box;
+}
 input[type=text], select, textarea {
   width: 100%;
   padding: 12px;
-  border: 1px solid #ccc;
+  border: 1px solid #bdc3c7;
   border-radius: 4px;
-  box-sizing: border-box;
   margin-top: 6px;
   margin-bottom: 16px;
-  resize: vertical;
+  background: #34495e;
+  color: #ecf0f1;
 }
-
 button[type=submit] {
-  background-color: #04AA6D;
+  background-color: #27ae60;
   color: white;
   padding: 12px 20px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
-
 button[type=submit]:hover {
-  background-color: #45a049;
+  background-color: #2ecc71;
 }
-
 .container {
   border-radius: 5px;
-  background-color: #f2f2f2;
-  padding: 20px;
-  margin-left: 50px;
-  margin-right: 50px;
+  background-color: #34495e;
+  padding: 30px;
+  margin: 50px auto;
+  max-width: 600px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
-
-.head{
-	background: #eeeeee;
-	position:relative;
-    text-align:center;
-	padding-top: 50px;
-	padding-bottom: 40px;
-	margin-bottom: 20px;
+.head {
+  background: #273c75;
+  text-align: center;
+  padding: 50px 0;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
-.head h1{
-	color: #000000;
-	font-size: 60px;
-	font-family:Bahnschrift SemiBold;
-	margin:auto;
-    vertical-align:middle;
+.head h1 {
+  color: #e84118;
+  font-size: 48px;
+  font-family: 'Bahnschrift SemiBold';
 }
-
-.head p{
-	color: #353535;
-	font-family:Bahnschrift;
-	margin:auto;
-    vertical-align:middle;
+.head p {
+  color: #dcdde1;
+  font-family: 'Bahnschrift';
+  font-size: 20px;
 }
-.head a{
-	text-decoration: none;
-	color: #534bae;
-}
-.topnav {
-  overflow: hidden;
-  background-color: #222222;
-}
-
-.topnav a {
-  float: left;
-  color: #cccccc;
-  margin: auto;
-  padding: 15px;
-  margin-left: 200px;
+.head a {
+  color: #3498db;
   text-decoration: none;
 }
-
-.topnav a:hover {
-  color: #ffffff;
-}
-
-.topnav a.active {
-  font-size: 18px;
+footer {
+  width: 100%;
+  height: 80px;
   text-align: center;
-  font-family:Bahnschrift;
+  background: #2f3640;
 }
-
-.topnav a.active:hover {
-  color: #ffffff;
+footer p {
+  color: #dcdde1;
+  font-family: 'Bahnschrift';
+  line-height: 80px;
 }
-
-.topnav-right {
-  float: right;
-  font-size: 14px;
-  text-align: center;
-  margin-right: 200px;
-  font-family:Bahnschrift;
-}
-
-footer p{
-	text-align: center;
-	color: #ffffff;
-	font-family:Bahnschrift;
-}
-footer a{
-	text-decoration: none;
-	color: #534bae;
+footer a {
+  color: #3498db;
+  text-decoration: none;
 }
 </style>
 </head>
 <body>
-  <div class="topnav">
-      <a class="active" href="#home">I</a>
-      <div class="topnav-right">
-          <a href="#search">Reference Paper</a>
-      </div>
-  </div>
-  <div class="head">
-      <h1>Document Question Answering System using NLP Techniques</h1>
-  </div>
-  <div class="container">
-      <form action="{{ url_for('index') }}" method="POST">
-          <input type="hidden" name="file_name" value="{{ file_name }}">
-          <label for="fname">Question</label>
-          <input type="text" id="fname" name="question" placeholder="Enter Question.." value="{{ question or '' }}">
-          <button type="submit" class="btn-primary" name='btn' value='qa'>Submit</button>
-      </form>
-      <br>
-      <label for="subject">Answer</label>
-      <textarea readonly id="subject" name="answer" placeholder="" style="height:200px">{{ answer or '' }}</textarea>
-  </div>
+<div class="head">
+  <h1>Document Question Answering System using NLP Techniques</h1>
+</div>
+<div class="container">
+  <form action="{{ url_for('index') }}" method="POST">
+    <input type="hidden" name="file_name" value="{{ file_name }}">
+    <label for="fname">Question</label>
+    <input type="text" id="fname" name="question" placeholder="Enter Question.." value="{{ question or '' }}">
+    <button type="submit" class="btn-primary" name='btn' value='qa'>Submit</button>
+  </form>
+  <br>
+  <label for="subject">Answer</label>
+  <textarea readonly id="subject" name="answer" placeholder="" style="height:200px">{{ answer or '' }}</textarea>
+</div>
 </body>
 </html>
