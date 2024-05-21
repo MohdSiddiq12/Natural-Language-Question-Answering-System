@@ -1,4 +1,4 @@
-# Major Project: Document Question Answering System
+# Major Project: Document Question Answering System using NLP Techniques
 
 This repository contains code, documents, references, and resources for the Major Project (Batch 2024).
 
