@@ -1,70 +1,82 @@
-Major-Project
+# Major Project: Document Question Answering System
 
-Code, Documents, References & Resources for Major Project (Batch 2024)
+This repository contains code, documents, references, and resources for the Major Project (Batch 2024).
 
-Document Question Answering System using NLP Techniques
-This Flask web application allows users to upload PDF files and ask questions related to their content. It utilizes the fine-tuned Bidirectional Encoder Representations from Transformers (BERT) model for question answering, combining NLP techniques with deep learning for accurate answers.
+## Overview
 
-Features
+The Document Question Answering System is a Flask web application that enables users to upload PDF files and ask questions related to their content. It leverages NLP techniques, particularly the fine-tuned Bidirectional Encoder Representations from Transformers (BERT) model, for accurate question answering.
 
-Upload PDF files
-Ask questions related to the uploaded PDF content
-Get answers extracted from the PDF using BERT
-Handle long documents with intelligent splitting and context preservation
-Display answers with relevant context from the PDF
-Easy-to-use web interface
-Architecture
+## Features
 
-This client-server system uses a Flask backend and a web frontend. Core components include:
+- Upload PDF files
+- Ask questions related to uploaded PDF content
+- Obtain answers extracted from the PDF using BERT
+- Handle long documents with intelligent splitting and context preservation
+- Display answers with relevant context from the PDF
+- Easy-to-use web interface
 
-BERT Model: The fine-tuned BERT model converts questions and document content into semantic representations, enabling accurate answer identification.
+## Architecture
 
-Document Processing: The expand_split_sentences function handles long documents exceeding BERT's token limit. It intelligently splits paragraphs while preserving context.
+This client-server system comprises a Flask backend and a web frontend. Key components include:
 
-Answer Extraction: The system combines extractive and abstractive summarization techniques to provide concise and informative answers from relevant passages.
+- **BERT Model:** The fine-tuned BERT model converts questions and document content into semantic representations for accurate answer identification.
+  
+- **Document Processing:** The system employs the `expand_split_sentences` function to handle long documents exceeding BERT's token limit. It intelligently splits paragraphs while preserving context.
+  
+- **Answer Extraction:** Combining extractive and abstractive summarization techniques, the system provides concise and informative answers from relevant passages.
+  
+- **Web Interface:** The Flask backend serves a user-friendly interface for uploading PDFs, entering questions, and viewing extracted answers with context.
 
-Web Interface: The Flask backend serves a user-friendly interface for uploading PDFs, entering questions, and viewing extracted answers with context.
+### BERT Architecture (Optional)
 
-BERT Architecture (Optional)
+For a deeper understanding of BERT architecture, you can refer to [this explanatory resource](link/to/resource).
 
-Consider including a link to an explanatory resource on BERT architecture (like the one provided for BERT itself) if you want to delve deeper.
+## System Design
 
-System Design
+The project adheres to a well-defined system design documented in the Major Project PPT file, including:
 
-The project follows a well-defined system design documented in the Major Project PPT file (UML diagrams, sequence diagrams). Key components include:
+- **Use Case Diagram:** Illustrates interactions between users and the system (e.g., uploading PDFs, asking questions, viewing answers).
+  
+- **Sequence Diagrams:** Describes interactions between system components (e.g., file upload handling, question processing, response rendering).
+  
+- **Flowchart:** Provides a visual representation of program execution, including operations and decision points.
+  
+- **ER Diagram (if applicable):** Depicts data entities and their relationships within the system.
 
-Use Case Diagram: Interactions between users and the system (upload PDFs, ask questions, view answers).
-Sequence Diagrams: Interactions between system components (file upload handling, question processing, response rendering).
-Flowchart: Visual representation of program execution (operations and decision points).
-ER Diagram (if applicable): Data entities and their relationships within the system.
-Installation
+## Installation
 
-Clone the repository:
+1. Clone the repository:
 
-Bash
-git clone https://github.com/your-username/document-qa-system.git
-Use code with caution.
-content_copy
-Install dependencies:
+    ```bash
+    git clone https://github.com/your-username/document-qa-system.git
+    ```
 
-Bash
-pip install -r requirements.txt
-Use code with caution.
-content_copy
-Download the pre-trained BERT model and tokenizer (replace with download instructions). Save them as bert_model.pkl and bert_tokenizer.pkl in the project directory.
+    **Note:** Use code with caution.
 
-Run the Flask application:
+2. Install dependencies:
 
-Bash
-python app.py
-Use code with caution.
-content_copy
-Access the web interface: http://localhost:5000 in your browser.
+    ```bash
+    pip install -r requirements.txt
+    ```
 
-Contributing
+    **Note:** Use code with caution.
 
-We welcome contributions! If you find issues or have suggestions, please open an issue or submit a pull request.
+3. Download the pre-trained BERT model and tokenizer (replace with download instructions). Save them as `bert_model.pkl` and `bert_tokenizer.pkl` in the project directory.
 
-License
+4. Run the Flask application:
+
+    ```bash
+    python app.py
+    ```
+
+    **Note:** Use code with caution.
+
+5. Access the web interface: [http://localhost:5000](http://localhost:5000) in your browser.
+
+## Contributing
+
+Contributions are welcome! If you encounter issues or have suggestions, please open an issue or submit a pull request.
+
+## License
 
 This project is licensed under the MIT License.
