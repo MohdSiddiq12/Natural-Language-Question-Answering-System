@@ -43,7 +43,7 @@ Here are some screenshots showcasing the Document Question Answering System:
 
 ### Upload PDF File
 
-![Upload PDF File](images\Upload.png)
+![File_Selected](https://github.com/MohdSiddiq12/Python-exercise/assets/97431769/d5498473-ee1c-441f-90db-1700d9a571db)
 
 ### Question Answering
 
