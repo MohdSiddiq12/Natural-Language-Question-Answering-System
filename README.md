@@ -41,21 +41,26 @@ The project adheres to a well-defined system design documented in the Major Proj
 
 Here are some screenshots showcasing the Document Question Answering System:
 
+### Home Screen
+![Home-Screen](https://github.com/MohdSiddiq12/Python-exercise/assets/97431769/70ca03c9-a1cb-404c-ba7b-482c326805f6)
+
 ### Upload PDF File
+
+![Upload](https://github.com/MohdSiddiq12/Python-exercise/assets/97431769/70dd0c06-ec45-4775-a5dc-b775dff072c9)
+
+
+### File Selected
 
 ![File_Selected](https://github.com/MohdSiddiq12/Python-exercise/assets/97431769/d5498473-ee1c-441f-90db-1700d9a571db)
 
 ### Question Answering
 
-![Question Answering](Question_Answering.png)
 
-### Home Screen
+![Question_Answering](https://github.com/MohdSiddiq12/Python-exercise/assets/97431769/edf62b37-3265-4e0b-bcf1-593ff4720f98)
 
-![Home Screen](Homescreen.png)
 
-### File Selected
 
-![File Selected](File_Selected.png)
+
 
 ## Installation
 
