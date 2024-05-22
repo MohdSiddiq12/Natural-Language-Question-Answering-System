@@ -43,7 +43,7 @@ Here are some screenshots showcasing the Document Question Answering System:
 
 ### Upload PDF File
 
-![Upload PDF File](upload.png)
+![C:\Users\MohdS\OneDrive\Desktop\Major-Project\images\Upload.png](upload.png)
 
 ### Question Answering
 
