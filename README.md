@@ -1,10 +1,10 @@
-# Major Project: Document Question Answering System using NLP Techniques
+# Natural Laguage Question Answering System
 
 This repository contains code, documents, references, and resources for the Major Project (Batch 2024).
 
 ## Overview
 
-The Document Question Answering System is a Flask web application that enables users to upload PDF files and ask questions related to their content. It leverages NLP techniques, particularly the fine-tuned Bidirectional Encoder Representations from Transformers (BERT) model, for accurate question answering.
+Natural Laguage Question Answering System is a Flask web application that enables users to upload PDF files and ask questions related to their content. It leverages NLP techniques, particularly the fine-tuned Bidirectional Encoder Representations from Transformers (BERT) model, for accurate question answering.
 
 ## Features
 
